@@ -2,10 +2,9 @@ import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 
 import Preload from '../screens/Preload';
-import Preload from '../screens/SignIn';
-import Preload from '../screens/SignUp';
-import MainTab from '../stacks/MainTab';
+import SignIn from '../screens/SignIn';
 import SignUp from '../screens/SignUp';
+import MainTab from '../stacks/MainTab';
 
 const Stack = createStackNavigator();
 

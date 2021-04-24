@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Plataform, RefreshControl } from 'react-native';
+import { Platform, RefreshControl } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { request, PERMISSIONS } from 'react-native-permissions';
 import Geolocation from '@react-native-community/geolocation';
@@ -23,9 +23,9 @@ import {
 } from './styles';
 
 import BarberItem from '../../components/BarberItem';
+
 import SearchIcon from '../../assets/search.svg';
 import MyLocationIcon from '../../assets/my_location.svg';
-import { set } from 'react-native-reanimated';
 
 export default () => {
 
@@ -37,10 +37,10 @@ export default () => {
     const [list, setList] = useState([]);
     const [refreshing, setRefreshing] = useState(false);
 
-    const handleLocationFinder = () => {
+    const handleLocationFinder = async () => {
         setCoords(null);
-        let result =  await request(
-            Plataform.OS === 'ios' ?
+        let result = await request(
+            Platform.OS === 'ios' ?
                 PERMISSIONS.IOS.LOCATION_WHEN_IN_USE
                 :
                 PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION
