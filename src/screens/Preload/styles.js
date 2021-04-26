@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from 'styled-components/native';
+import styled from 'styled-components/native';
 
 export const Container = styled.SafeAreaView`
     background-color: #63C2D1;

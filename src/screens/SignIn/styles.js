@@ -1,6 +1,5 @@
 import React from 'react';
-import styled from 'styled-components';
-import styles from 'styled-components/native';
+import styled from 'styled-components/native';
 
 export const Container = styled.SafeAreaView`
     background-color: #63C2D1;
@@ -31,11 +30,11 @@ export const SignMessageButton = styled.TouchableOpacity`
     margin-top: 50px;
     margin-bottom: 20px;
 `;
-export const SignMessageButtonText = style.Text`
+export const SignMessageButtonText = styled.Text`
     font-size: 16px;
     color: #268596
 `;
-export const SignMessageButtonTextBold = style.Text`
+export const SignMessageButtonTextBold = styled.Text`
     font-size: 16px;
     color: #268596
     font-weight: bold;
