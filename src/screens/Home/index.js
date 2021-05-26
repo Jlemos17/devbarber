@@ -6,7 +6,7 @@ import Geolocation from '@react-native-community/geolocation';
 
 import Api from '../../Api';
 
-import { 
+import {
     Container,
     Scroller,
 
@@ -28,7 +28,6 @@ import SearchIcon from '../../assets/search.svg';
 import MyLocationIcon from '../../assets/my_location.svg';
 
 export default () => {
-
     const navigation = useNavigation();
 
     const [locationText, setLocationText] = useState('');
@@ -46,16 +45,15 @@ export default () => {
                 PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION
         );
 
-        if(result == 'granted'){
-
+        if(result == 'granted') {
             setLoading(true);
             setLocationText('');
             setList([]);
-            
+
             Geolocation.getCurrentPosition((info)=>{
                 setCoords(info.coords);
                 getBarbers();
-            })
+            });
 
         }
     }
@@ -73,8 +71,8 @@ export default () => {
 
         let res = await Api.getBarbers(lat, lng, locationText);
         if(res.error == '') {
-            if(res.loc){
-                set.locationText(res.loc);
+            if(res.loc) {
+                setLocationText(res.loc);
             }
             setList(res.data);
         } else {
@@ -93,26 +91,26 @@ export default () => {
         getBarbers();
     }
 
-    const handleLocationSearch = () =>{
+    const handleLocationSearch = () => {
         setCoords({});
         getBarbers();
     }
 
     return (
         <Container>
-            <Scroller RefreshControl={
+            <Scroller refreshControl={
                 <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
             }>
-
+                
                 <HeaderArea>
-                    <HeaderTitle numberOfLine={2}>Encontre o seu barbeiro favorito</HeaderTitle>
+                    <HeaderTitle numberOfLines={2}>Encontre o seu barbeiro favorito</HeaderTitle>
                     <SearchButton onPress={()=>navigation.navigate('Search')}>
                         <SearchIcon width="26" height="26" fill="#FFFFFF" />
                     </SearchButton>
                 </HeaderArea>
 
                 <LocationArea>
-                    <LocationInput 
+                    <LocationInput
                         placeholder="Onde você está?"
                         placeholderTextColor="#FFFFFF"
                         value={locationText}
@@ -123,15 +121,17 @@ export default () => {
                         <MyLocationIcon width="24" height="24" fill="#FFFFFF" />
                     </LocationFinder>
                 </LocationArea>
+
                 {loading &&
                     <LoadingIcon size="large" color="#FFFFFF" />
                 }
-
+                
                 <ListArea>
                     {list.map((item, k)=>(
                         <BarberItem key={k} data={item} />
                     ))}
                 </ListArea>
+
             </Scroller>
         </Container>
     );

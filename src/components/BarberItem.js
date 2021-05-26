@@ -41,8 +41,9 @@ const SeeProfileButtonText = styled.Text`
     color: #268596;
 `;
 
+
 export default ({data}) => {
-    return(
+    return (
         <Area>
             <Avatar source={{uri: data.avatar}} />
             <InfoArea>
@@ -55,5 +56,5 @@ export default ({data}) => {
                 </SeeProfileButton>
             </InfoArea>
         </Area>
-    )
+    );
 }

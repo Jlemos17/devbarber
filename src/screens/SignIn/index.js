@@ -4,9 +4,9 @@ import AsyncStorage from '@react-native-community/async-storage';
 
 import { UserContext } from '../../contexts/UserContext';
 
-import { 
+import {
     Container,
-    InputArea ,
+    InputArea,
     CustomButton,
     CustomButtonText,
     SignMessageButton,
@@ -23,33 +23,33 @@ import EmailIcon from '../../assets/email.svg';
 import LockIcon from '../../assets/lock.svg';
 
 export default () => {
-    const { dispatch: userDispatch } = useContext (UserContext);
+    const { dispatch: userDispatch } = useContext(UserContext);
     const navigation = useNavigation();
 
-    const[emailField, setEmailField] = useState('');
-    const[passwordField, setPasswordField] = useState('');
+    const [emailField, setEmailField] = useState('');
+    const [passwordField, setPasswordField] = useState('');
 
     const handleSignClick = async () => {
-        if(emailField != '' && passwordField != ''){
+        if(emailField != '' && passwordField != '') {
 
-          let json = await Api.signIn(emailField, passwordField);
-          if(json.token) {
-            await AsyncStorage.setItem('token', json.token);
+            let json = await Api.signIn(emailField, passwordField);
 
-            userDispatch({
-                type: 'setAvatar',
-                payload: {
-                    avatar: json.data.avatar
-                }
-            });
+            if(json.token) {
+                await AsyncStorage.setItem('token', json.token);
 
-            navigation.reset({
-                routes:[{name:'MainTab'}]
-            });
+                userDispatch({
+                    type: 'setAvatar',
+                    payload:{
+                        avatar: json.data.avatar
+                    }
+                });
 
-          } else {
-            alert("E-mail e/ou senha errados!");
-          }
+                navigation.reset({
+                    routes:[{name:'MainTab'}]
+                });
+            } else {
+                alert('E-mail e/ou senha errados!');
+            }
 
         } else {
             alert("Preencha os campos!");
@@ -62,21 +62,21 @@ export default () => {
         });
     }
 
-    return(
+    return (
         <Container>
             <BarberLogo width="100%" height="160" />
 
             <InputArea>
-                <SignInput 
+                <SignInput
                     IconSvg={EmailIcon}
                     placeholder="Digite seu e-mail"
                     value={emailField}
                     onChangeText={t=>setEmailField(t)}
                 />
 
-                <SignInput 
+                <SignInput
                     IconSvg={LockIcon}
-                    placeholder="Digite sua senha" 
+                    placeholder="Digite sua senha"
                     value={passwordField}
                     onChangeText={t=>setPasswordField(t)}
                     password={true}

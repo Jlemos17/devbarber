@@ -10,22 +10,22 @@ import BarberLogo from '../../assets/barber.svg';
 
 export default () => {
 
-    const { dispatch: userDispatch } = useContext (UserContext);
+    const { dispatch: userDispatch } = useContext(UserContext);
     const navigation = useNavigation();
 
     useEffect(()=>{
         const checkToken = async () => {
             const token = await AsyncStorage.getItem('token');
-            if(token){
+            if(token) {
                 let res = await Api.checkToken(token);
-                if(res.token){
+                if(res.token) {
 
-                    await AsyncStorage.setItem('token', json.token);
+                    await AsyncStorage.setItem('token', res.token);
 
                     userDispatch({
                         type: 'setAvatar',
-                        payload: {
-                            avatar: json.data.avatar
+                        payload:{
+                            avatar: res.data.avatar
                         }
                     });
 
@@ -33,8 +33,7 @@ export default () => {
                         routes:[{name:'MainTab'}]
                     });
 
-
-                }else{
+                } else {
                     navigation.navigate('SignIn');
                 }
             } else {
@@ -42,12 +41,12 @@ export default () => {
             }
         }
         checkToken();
-    },[]);
+    }, []);
 
-    return(
+    return (
         <Container>
             <BarberLogo width="100%" height="160" />
             <LoadingIcon size="large" color="#FFFFFF" />
         </Container>
-    )
+    );
 }
